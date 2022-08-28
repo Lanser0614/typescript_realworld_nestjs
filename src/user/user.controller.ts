@@ -45,7 +45,7 @@ export class UserController {
     @User() user: UserEntity
   ): Promise<UserResponseInterface> {
     const userData = await this.userService.updateUser(DTO, user.id);
-    return this.userService.buildUserResponse(userData)
+    return this.userService.buildUserResponse(userData);
   }
 
 

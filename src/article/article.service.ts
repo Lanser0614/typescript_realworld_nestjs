@@ -6,6 +6,7 @@ import { CreateArticleDTO } from "./DTO/CreateArticleDTO";
 import { UserEntity } from "../user/user.entity";
 import { ArticleResponseInterface } from "./types/articleResponse.interface";
 import slugify from "slugify";
+import { UpdateArticleDTO } from "./DTO/UpdateArticleDTO";
 
 @Injectable()
 export class ArticleService {
@@ -13,6 +14,10 @@ export class ArticleService {
     @InjectRepository(ArticleEntity)
     private readonly articleRepository: Repository<ArticleEntity>
   ) {
+  }
+
+  async getAll(): Promise<ArticleEntity[]> {
+    return await this.articleRepository.find();
   }
 
   async createArticle(user: UserEntity, DTO: CreateArticleDTO): Promise<ArticleEntity> {
@@ -45,7 +50,16 @@ export class ArticleService {
     throw new HttpException("Not delete", 403);
   }
 
+  async updateArticle(article: ArticleEntity, DTO: UpdateArticleDTO):Promise<ArticleEntity> {
+    Object.assign(article, DTO);
+    return await this.articleRepository.save(article);
+  }
+
   buildArticleResponse(article: ArticleEntity): ArticleResponseInterface {
+    return { article };
+  }
+
+  buildArticleResponseAll(article: ArticleEntity[]): { article: ArticleEntity[] } {
     return { article };
   }
 
@@ -54,4 +68,6 @@ export class ArticleService {
       lower: true
     }) + "-" + ((Math.random() * Math.pow(36, 6)) | 0).toString(36);
   }
+
+
 }

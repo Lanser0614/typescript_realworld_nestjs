@@ -81,12 +81,11 @@ export class UserService {
 
 
   findById(id: number): Promise<UserEntity> {
-    const user = this.userRepository.findOne({
+    return this.userRepository.findOne({
       where: {
         id: id
       }
     });
-    return user;
   }
 
 }

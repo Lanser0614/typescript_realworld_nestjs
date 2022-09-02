@@ -8,6 +8,8 @@ import { TagModule } from "./tag/tag.module";
 import { UserModule } from "./user/user.module";
 import { AuthMiddleware } from "./user/MIddlware/auth.middleware";
 import { ArticleModule } from './article/article.module';
+import { CommentModule } from './comment/comment.module';
+import { ProfileModule } from './profile/profile.module';
 
 
 @Module({
@@ -21,7 +23,7 @@ import { ArticleModule } from './article/article.module';
     entities: [join(__dirname, "**", "*.entity.{ts,js}")],
     migrations: [join(__dirname, "**", "*.migration.{ts,js}")],
     synchronize: true
-  }), TaskModule, TagModule, UserModule, ArticleModule],
+  }), TaskModule, TagModule, UserModule, ArticleModule, CommentModule, ProfileModule],
   controllers: [AppController],
   providers: [AppService]
 })

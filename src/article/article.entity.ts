@@ -1,6 +1,15 @@
-import { BeforeInsert, BeforeUpdate, Column, Entity, ManyToOne, PrimaryGeneratedColumn, Timestamp } from "typeorm";
+import {
+  BeforeInsert,
+  BeforeUpdate,
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  Timestamp
+} from "typeorm";
 import { UserEntity } from "../user/user.entity";
-import { randomStringGenerator } from "@nestjs/common/utils/random-string-generator.util";
+import { CommentEntity } from "../comment/comment.entity";
 
 @Entity({ name: "articles" })
 export class ArticleEntity {
@@ -31,8 +40,11 @@ export class ArticleEntity {
   @Column({ default: 0 })
   favoritesCount: number;
 
-  @ManyToOne(() => UserEntity, user => user.articles, { eager: true})
+  @ManyToOne(() => UserEntity, user => user.articles, { eager: true })
   author: UserEntity;
+
+  @OneToMany(() => CommentEntity, comment => comment.article)
+  comments: CommentEntity[];
 
   @BeforeUpdate()
   updateTime() {
